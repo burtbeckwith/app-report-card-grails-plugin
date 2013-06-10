@@ -2,3 +2,4 @@ target
 .idea/
 app-report-card-grails-plugin.iml
 app-report-card-grails-plugin-grailsPlugins.iml
+plugin.xml
