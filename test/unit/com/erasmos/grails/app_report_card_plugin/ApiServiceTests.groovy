@@ -1,7 +1,8 @@
 package com.erasmos.grails.app_report_card_plugin
 
 import grails.plugins.rest.client.RestBuilder
-import grails.test.mixin.*
+import grails.test.mixin.TestFor
+
 import org.junit.Before
 import org.junit.Test
 
@@ -98,7 +99,6 @@ class ApiServiceTests {
         def rawStoreApp = service.findRawStoreApp(store,appId)
 
         assertEquals(firstResult,rawStoreApp)
-
     }
 
     @Test
@@ -138,7 +138,6 @@ class ApiServiceTests {
         def rawStoreApp = service.findRawStoreApp(store,appId)
 
         assertEquals(onlyResult,rawStoreApp)
-
     }
 
     @Test
@@ -182,10 +181,7 @@ class ApiServiceTests {
         def resultsAsJSON  = service.getResultsAsJSON(url)
 
         assertEquals([firstResult,secondResult],resultsAsJSON)
-
-
     }
-
 
     @Test
     void urlEncodeStore(){
@@ -207,7 +203,6 @@ class ApiServiceTests {
         assertEquals('367242295',urlEncodedAppId)
     }
 
-
     private void expectGetOnRestBuilder(final String expectedUrl, final def returnedResults){
 
         mockControlRestBuilder.demand.get {
@@ -216,7 +211,6 @@ class ApiServiceTests {
                 return returnedResults
         }
     }
-
 
     private void expectGetResultsAsJSON(final String expectedUrl, final List<Map> returnedResults){
 

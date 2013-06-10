@@ -1,10 +1,11 @@
 package com.erasmos.grails.app_report_card_plugin
 
+import grails.test.mixin.TestFor
 
-
-import grails.test.mixin.*
 import org.codehaus.groovy.grails.web.json.JSONArray
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
@@ -16,7 +17,6 @@ class AppReportCardRestfulControllerTests {
 
     def mockControlAppReportCardService
 
-
     @Before
     void setUp() {
 
@@ -25,15 +25,12 @@ class AppReportCardRestfulControllerTests {
         controller.appReportCardService = mockControlAppReportCardService.createMock()
 
         expectGetServerBaseURL(ServerBaseURL)
-
     }
 
     @After
     void tearDown(){
         clearJSONMarshallers()
     }
-
-
 
     @Test
     void findAppByIdWhenNoStore() {
@@ -44,7 +41,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("Store Code Required",response.text)
-
     }
 
     @Test
@@ -58,7 +54,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(404,response.status)
         assertEquals("Unknown Store: $storeCode".toString(),response.text)
-
     }
 
     @Test
@@ -72,7 +67,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
 
     @Test
@@ -86,7 +80,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
 
     @Test
@@ -100,7 +93,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
 
     @Test
@@ -119,7 +111,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(404,response.status)
         assertEquals("App for ID (${appId.id}) wasn't found in the Store (${store.code})".toString(),response.text)
-
     }
 
     @Test
@@ -140,9 +131,7 @@ class AppReportCardRestfulControllerTests {
         controller.findAppById()
 
         assertEquals(returnedMapForJson, response.json)
-
     }
-
 
     @Test
     void findAppsByNameWhenNoStore(){
@@ -153,7 +142,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("Store Code Required",response.text)
-
     }
 
     @Test
@@ -167,7 +155,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(404,response.status)
         assertEquals("Unknown Store: $storeCode".toString(),response.text)
-
     }
 
     @Test
@@ -182,7 +169,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals('App Name Required',response.text)
-
     }
 
     @Test
@@ -210,16 +196,13 @@ class AppReportCardRestfulControllerTests {
                     case returnedStoreAppOne : return returnedMapForStoreAppOne
                     case returnedStoreAppTwo : return returnedMapForStoreAppTwo
                     default: fail("Unexpected StoreApp: $_storeApp")
-
                 }
         }
-
 
         controller.findAppsByName()
 
         assertEquals(200,response.status)
         assertNotNull(response.json)
-
     }
 
     @Test
@@ -231,7 +214,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
 
     @Test
@@ -243,7 +225,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
 
     @Test
@@ -261,7 +242,6 @@ class AppReportCardRestfulControllerTests {
         controller.showAppReport()
 
         assertNotNull(response.json)
-
     }
 
     @Test
@@ -272,9 +252,7 @@ class AppReportCardRestfulControllerTests {
         controller.showAppReportForStore()
 
         assertStoreRequiredResponse()
-
     }
-
 
     @Test
     void showAppReportForStoreWhenInvalidStore(){
@@ -285,7 +263,6 @@ class AppReportCardRestfulControllerTests {
         controller.showAppReportForStore()
 
         assertUnknownStoreResponse()
-
     }
 
     @Test
@@ -300,9 +277,7 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
-
 
     @Test
     void showAppReportForStoreWhenInvalidAppId(){
@@ -316,7 +291,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("App ID Required",response.text)
-
     }
 
     @Test
@@ -335,7 +309,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(404,response.status)
         assertEquals("Report not found for Store (${store.code}) and App ID ($appId)".toString(),response.text)
-
     }
 
     @Test
@@ -356,7 +329,6 @@ class AppReportCardRestfulControllerTests {
         controller.showAppReportForStore()
 
         assertNotNull(response.json)
-
     }
 
     @Test
@@ -371,8 +343,6 @@ class AppReportCardRestfulControllerTests {
         def expectedFirstStore = Store.allSortedByName.first()
         def firstStoreAsJSON = storesAsJSON.first()
         assertEquals(expectedFirstStore.code,firstStoreAsJSON['code'])
-
-
     }
 
     @Test
@@ -384,9 +354,7 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(400,response.status)
         assertEquals("Store Code Required",response.text)
-
     }
-
 
     @Test
     void showStoreIconWhenUnknownStore(){
@@ -399,7 +367,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(404,response.status)
         assertEquals("Unknown Store: $storeCode".toString(),response.text)
-
     }
 
     @Test
@@ -417,7 +384,6 @@ class AppReportCardRestfulControllerTests {
 
         assertEquals(404,response.status)
         assertEquals("Icon not found for Store: JP",response.text)
-
     }
 
     @Test
@@ -437,7 +403,6 @@ class AppReportCardRestfulControllerTests {
         // TODO: Fails when run with 'test-app'
         // assertArrayEquals(returnedContent,response.contentAsByteArray)
         assertEquals(returnedContent.size(),response.contentAsByteArray.size())
-
     }
 
     @Test
@@ -450,7 +415,6 @@ class AppReportCardRestfulControllerTests {
         assertEquals(store.code,storeAsMap['code'])
         assertEquals(store.name,storeAsMap['name'])
         assertEquals("$ServerBaseURL/appReportCardRestful/stores/IS/icon" as String,storeAsMap['icon'])
-
     }
 
     @Test
@@ -489,10 +453,7 @@ class AppReportCardRestfulControllerTests {
         def links = storeAppReportAsMap['links'] as Map
         assertEquals(1,links.size())
         assertEquals("$ServerBaseURL/appReportCardRestful/apps/367242295/report" as String, links['appReportUrl'])
-
-
     }
-
 
     @Test
     void getStoreAppAsMapForJSON(){
@@ -522,7 +483,6 @@ class AppReportCardRestfulControllerTests {
         assertEquals(2,links.size())
         assertEquals("${ServerBaseURL}/appReportCardRestful/apps/367242295/report/CA" as String,links['storeAppReportUrl'])
         assertEquals("${ServerBaseURL}/appReportCardRestful/apps/367242295/report" as String,links['appReportUrl'])
-
     }
 
     @Test
@@ -545,7 +505,6 @@ class AppReportCardRestfulControllerTests {
                 appName: 'French Numbers',
                 developerName: 'Erasmos Inc')
 
-
         def storeAppReportForCanada = new StoreAppReport(
                 storeApp:storeAppForCanada,
                 userRatingCountForAllVersions:1000,
@@ -561,7 +520,6 @@ class AppReportCardRestfulControllerTests {
                 userRatingCountForCurrentVersionOnly:50,
                 averageUserRatingForCurrentVersionOnly: 3.00
         )
-
 
         def appReport = new AppReport(appId:appId,storeAppReports: [storeAppReportForCanada,storeAppReportForUnitedKingdom])
 
@@ -581,8 +539,6 @@ class AppReportCardRestfulControllerTests {
 
         def storeAppReportForUnitedKingdomAsMap = storeAppReportsAsMapsForJSON.last()
         assertEquivalent(storeAppReportForUnitedKingdom,storeAppReportForUnitedKingdomAsMap)
-
-
     }
 
     private void assertEquivalent(final StoreAppReport storeReportApp, final Map storeAppReportAsMapForJSON){
@@ -602,7 +558,6 @@ class AppReportCardRestfulControllerTests {
         def links = storeAppReportAsMapForJSON['links'] as Map
         assertEquals(1,links.size())
         assertEquals("$ServerBaseURL/appReportCardRestful/apps/${storeReportApp.appId.id}/report" as String, links['appReportUrl'])
-
     }
 
     private void expectGetResourceContents(final String expectedResourcePath, final byte[] returnedContent){
@@ -611,7 +566,6 @@ class AppReportCardRestfulControllerTests {
             String _resourcePath ->
                 assertEquals(expectedResourcePath,_resourcePath)
                 return returnedContent
-
         }
     }
 
@@ -625,7 +579,6 @@ class AppReportCardRestfulControllerTests {
                 return returnedStoreAppReport
         }
     }
-
 
     private void assertStoreRequiredResponse(){
 
@@ -688,7 +641,6 @@ class AppReportCardRestfulControllerTests {
         }
     }
 
-
     private void expectFindAppById(final Store expectedStore, final AppId expectedAppId, final StoreApp returnedStoreApp){
 
         mockControlAppReportCardService.demand.findAppById {
@@ -725,5 +677,4 @@ class AppReportCardRestfulControllerTests {
             it.metaClass.asType = null
         }
     }
-
 }

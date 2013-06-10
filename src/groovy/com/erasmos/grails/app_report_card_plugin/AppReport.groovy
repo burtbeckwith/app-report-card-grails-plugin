@@ -8,25 +8,24 @@ class AppReport {
     AppId appId
     List<StoreAppReport> storeAppReports = []
 
-
-    public Integer getUserRatingCountForCurrentVersionOnly(){
+    Integer getUserRatingCountForCurrentVersionOnly(){
         return storeAppReports.userRatingCountForCurrentVersionOnly.inject(0,{sum,value -> sum + value})
     }
 
-    public Integer getUserRatingCountForAllVersions(){
+    Integer getUserRatingCountForAllVersions(){
         return storeAppReports.userRatingCountForAllVersions.inject(0,{sum,value -> sum + value})
     }
 
-    public BigDecimal getAverageUserRatingForCurrentVersionOnly(){
+    BigDecimal getAverageUserRatingForCurrentVersionOnly(){
         return getOverallAverageRating(storeAppReports.averageUserRatingForCurrentVersionOnly)
 
     }
 
-    public BigDecimal getAverageUserRatingForAllVersions(){
+    BigDecimal getAverageUserRatingForAllVersions(){
         return getOverallAverageRating(storeAppReports.averageUserRatingForAllVersions)
     }
 
-    public List<StoreAppReport> getStoreAppReportsWithRatings(){
+    List<StoreAppReport> getStoreAppReportsWithRatings(){
         return storeAppReports.findAll {it.userRatingCountForAllVersions > 0 }
     }
 

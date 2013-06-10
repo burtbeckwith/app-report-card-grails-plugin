@@ -11,7 +11,7 @@ package com.erasmos.grails.app_report_card_plugin
  */
 class StoreApp {
 
-    static int MaxCharsForDisplayName = 60
+    static final int MaxCharsForDisplayName = 60
 
     Store store
 
@@ -19,7 +19,6 @@ class StoreApp {
     String appName
     String appSmallIconUrl
     String appCurrentVersion
-
 
     String developerName
 

@@ -1,13 +1,16 @@
 package com.erasmos.grails.app_report_card_plugin
 
+import grails.test.mixin.TestFor
+
+import org.junit.Before
+import org.junit.Test
+
 import com.erasmos.grails.app_report_card_plugin.ApiService.RawStoreApp
-import grails.test.mixin.*
-import org.junit.*
 
 @TestFor(AppReportCardService)
 class AppReportCardServiceTests {
 
-    def static MaxResults = 50
+    private static final int MaxResults = 50
 
     def mockControlForAPIService
 
@@ -50,7 +53,6 @@ class AppReportCardServiceTests {
 
         assertEquivalent(rawAppOne,apps[0],store)
         assertEquivalent(rawAppTwo,apps[1],store)
-
     }
 
     @Test
@@ -65,9 +67,7 @@ class AppReportCardServiceTests {
         def apps = service.findAppsByName(store,appName,MaxResults)
 
         assertTrue(apps.empty)
-
     }
-
 
     @Test
     void findAppByIdWhenItDoesNotExist(){
@@ -83,8 +83,6 @@ class AppReportCardServiceTests {
         assertNull(storeApp)
     }
 
-
-
     @Test
     void findAppByIdWhenItDoesExist(){
 
@@ -97,15 +95,12 @@ class AppReportCardServiceTests {
         def storeApp = service.findAppById(store,appId)
 
         assertEquivalent(returnedRawStoreApp,storeApp,store)
-
     }
-
 
     @Test
     void convertRawStoreAppToStoreApps(){
 
         def store = Store.UnitedKingdom
-
 
         def rawStoreApp = [
                 trackId:'367242295',
@@ -116,7 +111,6 @@ class AppReportCardServiceTests {
 
         ] as ApiService.RawStoreApp
 
-
         def storeApp = service.convertToStoreApp(store,rawStoreApp)
 
         assertEquals(store, storeApp.store)
@@ -125,10 +119,7 @@ class AppReportCardServiceTests {
         assertEquals(rawStoreApp.artistName,storeApp.developerName)
         assertEquals(rawStoreApp.artworkUrl60,storeApp.appSmallIconUrl)
         assertEquals(rawStoreApp.version,storeApp.appCurrentVersion)
-
     }
-
-
 
     @Test
     void successfullyGenerateReportForAppInStore(){
@@ -163,7 +154,6 @@ class AppReportCardServiceTests {
         assertEquals(returnedAverageUserRatingForAllVersions,storeAppReport.averageUserRatingForAllVersions,0.01)
         assertEquals(returnedUserRatingCountForCurrentVersionOnly,storeAppReport.userRatingCountForCurrentVersionOnly)
         assertEquals(returnedUserRatingCountForAllVersions,storeAppReport.userRatingCountForAllVersions)
-
     }
 
     @Test
@@ -178,7 +168,6 @@ class AppReportCardServiceTests {
         def appInStoreReport = service.generateStoreAppReport(store,appId)
 
         assertNull(appInStoreReport)
-
     }
 
     @Test
@@ -213,8 +202,6 @@ class AppReportCardServiceTests {
         assertEquals(2,appReport.storeAppReports.size())
         assertSame(returnedStoreAppReportForUnitedStates,appReport.storeAppReports[0])
         assertSame(returnedStoreAppReportForCanada,appReport.storeAppReports[1])
-
-
     }
 
     private void expectGetAllStores(final List<Store> returnedStores){

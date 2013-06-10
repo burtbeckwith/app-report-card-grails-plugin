@@ -7,14 +7,12 @@ import org.junit.Test
 
 class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
 
-    static String ServerBaseURL = "http://localhost:8080/app-report-card"
+    static final String ServerBaseURL = "http://localhost:8080/app-report-card"
 
-    AppReportCardRestfulController controller
+    private AppReportCardRestfulController controller = new AppReportCardRestfulController()
 
     @Before
     void setUp() {
-
-        controller = new AppReportCardRestfulController()
 
       //  controller.registerJSONMarshallers()
 
@@ -24,7 +22,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
 
         ensureJSONMarshallersRegistered()
     }
-
 
     private void ensureJSONMarshallersRegistered(){
 
@@ -71,7 +68,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
 
         assertEquals('http://localhost:8080/app-report-card/appReportCardRestful/apps/367242295/report/CA',jsonMap.links.storeAppReportUrl)
         assertEquals('http://localhost:8080/app-report-card/appReportCardRestful/apps/367242295/report',jsonMap.links.appReportUrl)
-
     }
 
     @Test
@@ -120,8 +116,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
         assertNumber(jsonMap.averageUserRatingForCurrentVersionOnly)
         assertEquals(1,jsonMap.links.size())
         assertEquals('http://localhost:8080/app-report-card/appReportCardRestful/apps/367242295/report',jsonMap.links.appReportUrl)
-
-
     }
 
     @Test
@@ -132,7 +126,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
         def jsonMap = getMultipleJSONObjectsAsMap()
 
         assertEquals(Store.values().size(),jsonMap.size())
-
     }
 
     /**
@@ -152,7 +145,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
                 assertEquals(200, controller.response.status)
                 assertTrue(controller.response.contentAsByteArray.length>0)
         }
-
     }
 
     @Test
@@ -174,8 +166,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
         assertEquals(Store.values().size(),jsonMap.storeAppReports.size())
 
         jsonMap.storeAppReports.each {assertValidateStoreAppReportAsMap(it)}
-
-
     }
 
     private void assertValidateStoreAppReportAsMap(final Map storeAppReportAsMap){
@@ -197,18 +187,13 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
         assertNumber(storeAppReportAsMap.averageUserRatingForCurrentVersionOnly)
         assertEquals(1,storeAppReportAsMap.links.size())
         assertNotBlank(storeAppReportAsMap.links.appReportUrl)
-
-
-
     }
 
     private void assertNumber(def value){
         assertTrue(value instanceof Number)
     }
 
-
     private void assertValidStoreAppAsMap(final Map storeAppAsMap){
-
 
         assertEquals(10,storeAppAsMap.size())
         assertNotBlank(storeAppAsMap.storeCode)
@@ -223,11 +208,7 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
         assertEquals(2,storeAppAsMap.links.size())
         assertNotBlank(storeAppAsMap.links.storeAppReportUrl)
         assertNotBlank(storeAppAsMap.links.appReportUrl)
-
-
-
     }
-
 
     private Map getSingleJSONObjectAsMap(){
 
@@ -251,7 +232,6 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
         assertFalse(thing.trim().empty)
     }
 
-
     /**
      * I wasn't able to mock the LinkGenerator; no matter, Grails
      * automatically injects one, even for unit tests.
@@ -260,15 +240,8 @@ class AppReportCardRestfulControllerIntegrationTests extends GroovyTestCase {
      */
     private void expectGetServerBaseURL(final String returnedServerBaseURL){
 
-        controller.grailsLinkGenerator.metaClass.getServerBaseURL {
-            ->
+        controller.grailsLinkGenerator.metaClass.getServerBaseURL { ->
             return returnedServerBaseURL
         }
-
     }
-
-
-
-
-
 }

@@ -19,35 +19,35 @@ class StoreAppReport {
     BigDecimal averageUserRatingForCurrentVersionOnly
     Integer userRatingCountForCurrentVersionOnly
 
-    public Store getStore(){
+    Store getStore(){
         return storeApp?.store
     }
 
-    public String getStoreName(){
+    String getStoreName(){
         return storeApp?.store?.name
     }
 
-    public String getStoreCode(){
+    String getStoreCode(){
         return storeApp?.store?.code
     }
 
-    public String getAppName(){
+    String getAppName(){
         return storeApp?.appName
     }
 
-    public String getAppNameForDisplay(){
+    String getAppNameForDisplay(){
         return storeApp?.appNameForDisplay
     }
 
-    public String getAppUrl(){
+    String getAppUrl(){
         return storeApp?.appUrl
     }
 
-    public AppId getAppId() {
+    AppId getAppId() {
         return storeApp?.appId
     }
 
-    public String getDeveloperName(){
+    String getDeveloperName(){
         return storeApp?.developerName
     }
 
@@ -74,5 +74,4 @@ class StoreAppReport {
         builder.append("=================================")
         return builder.toString()
     }
-
 }

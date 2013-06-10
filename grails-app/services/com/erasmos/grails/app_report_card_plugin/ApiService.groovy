@@ -3,7 +3,6 @@ package com.erasmos.grails.app_report_card_plugin
 import grails.plugins.rest.client.RestBuilder
 import org.springframework.cache.annotation.Cacheable
 
-
 /**
  * Ref: http://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html
  *
@@ -11,12 +10,12 @@ import org.springframework.cache.annotation.Cacheable
  */
 class ApiService {
 
-    static def transactional = false
+    static transactional = false
 
-    private static String BaseUrl = 'https://itunes.apple.com'
-    private static int DefaultMaxSearchResults = 20
-    private static String BaseUrlForSearch = "${BaseUrl}/search?entity=software&"
-    private static String BaseUrlForLookup = "${BaseUrl}/lookup?"
+    private static final String BaseUrl = 'https://itunes.apple.com'
+    private static final int DefaultMaxSearchResults = 20
+    private static final String BaseUrlForSearch = "${BaseUrl}/search?entity=software&"
+    private static final String BaseUrlForLookup = "${BaseUrl}/lookup?"
 
     /**
      *
@@ -25,7 +24,7 @@ class ApiService {
      * @return
      */
     @Cacheable('ApiService_FindRawStoreAppsByName')
-    public List<RawStoreApp> findRawStoreAppsByName(final Store store,final String term, final int maxResults = DefaultMaxSearchResults){
+    List<RawStoreApp> findRawStoreAppsByName(final Store store,final String term, final int maxResults = DefaultMaxSearchResults){
 
         assert store != null, 'Missing Store'
         assert term != null, 'Missing Term'
@@ -42,7 +41,7 @@ class ApiService {
      * @return
      */
     @Cacheable('ApiService_FindRawStoreApp')
-    public RawStoreApp findRawStoreApp(final Store store, final AppId appId){
+    RawStoreApp findRawStoreApp(final Store store, final AppId appId){
 
         assert store    != null, 'Missing Store'
         assert appId    != null, 'Missing AppId'
@@ -69,7 +68,6 @@ class ApiService {
         if(log.isTraceEnabled()) log.trace(rawStoreApp)
 
         return rawStoreApp
-
     }
 
     /**
@@ -122,7 +120,6 @@ class ApiService {
         return "${BaseUrlForSearch}country=${urlEncode(store)}&term=${urlEncode(term)}&limit=$maxResults"
     }
 
-
     /**
      * @param storeCode
      * @param appId
@@ -167,7 +164,6 @@ class ApiService {
         return URLEncoder.encode(original,'UTF-8')
     }
 
-
     /**
      *
      * RawStoreApp is just a copy of the original Map (JSON)
@@ -193,7 +189,7 @@ class ApiService {
         return new RestBuilder()
     }
 
-    public static class RawStoreApp extends HashMap {
+    static class RawStoreApp extends HashMap {
 
     }
 }

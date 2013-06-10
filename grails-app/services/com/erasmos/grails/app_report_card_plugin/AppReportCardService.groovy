@@ -5,17 +5,13 @@ import org.apache.commons.lang.time.StopWatch
 
 class AppReportCardService {
 
-
-
     /**
      * Seems necessary, otherwise Grails looks for a TransactionManager (besides
      * the Hibernate one that doesn't seem to be included in a plug-in).
      */
-    def static transactional = false
-
+    static transactional = false
 
     ApiService apiService
-
 
     /**
      *
@@ -24,7 +20,7 @@ class AppReportCardService {
      * @param maxResults May not be supported by the actual iTunes API.
      * @return
      */
-    public List<StoreApp> findAppsByName(final Store store, final String appName, final int maxResults) {
+    List<StoreApp> findAppsByName(final Store store, final String appName, final int maxResults) {
 
         assert store != null, "Missing a Store"
         assert appName != null, "Missing an App Name"
@@ -49,7 +45,7 @@ class AppReportCardService {
      * @param appId
      * @return
      */
-    public StoreApp findAppById(final Store store, final AppId appId) {
+    StoreApp findAppById(final Store store, final AppId appId) {
 
         assert store != null, "Missing a Store"
         assert appId != null, "Missing an AppId"
@@ -78,7 +74,7 @@ class AppReportCardService {
      * @param store
      * @return
      */
-    public StoreAppReport generateStoreAppReport(final Store store, final AppId appId){
+    StoreAppReport generateStoreAppReport(final Store store, final AppId appId){
 
         assert store != null, "Missing a Store"
         assert appId != null, "Missing an AppId"
@@ -89,7 +85,6 @@ class AppReportCardService {
         if(!rawStoreApp){
             if(log.isErrorEnabled()) log.error("The App ($appId) doesn't seem to exist in the Store ($store).")
             return null
-
         }
 
         def storeApp =  new StoreApp(   store:store,
@@ -106,15 +101,13 @@ class AppReportCardService {
         return storeAppReport
     }
 
-
-
     /**
      * Generates a report on for AppId across all of the Stores.
      *
      * @param appId
      * @return
      */
-    public AppReport generateAppReport(final AppId appId){
+    AppReport generateAppReport(final AppId appId){
 
         assert appId != null, "Missing AppId"
 
@@ -152,7 +145,6 @@ class AppReportCardService {
         GParsPool.withPool(numberOfThreads){
             return stores.makeConcurrent().collect{generateStoreAppReport(it, appId)}.findAll {it!=null}.makeSequential()
         }
-
     }
 
     /**
@@ -161,7 +153,7 @@ class AppReportCardService {
      *
      * @return
      */
-    public List<Store> getAllStores(){
+    List<Store> getAllStores(){
         return Store.values()
     }
 
@@ -205,7 +197,5 @@ class AppReportCardService {
                 appCurrentVersion:rawStoreApp.version,
                 developerName: rawStoreApp.artistName,
         )
-
     }
-
 }

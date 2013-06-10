@@ -21,7 +21,7 @@ class AppId  {
         if (this.is(o)) return true
         if (!(o instanceof AppId)) return false
 
-        AppId appId = (AppId) o
+        AppId appId = o
 
         if (id != appId.id) return false
 

@@ -3,3 +3,5 @@ target
 app-report-card-grails-plugin.iml
 app-report-card-grails-plugin-grailsPlugins.iml
 plugin.xml
+*.zip
+*.log

@@ -1,6 +1,5 @@
 package com.erasmos.grails.app_report_card_plugin
 
-
 enum Store {
 
     UnitedArabEmirates('AE','United Arab Emirates'),
@@ -134,11 +133,11 @@ enum Store {
         this.name   = name
     }
 
-    public static Store findByCode(final String code){
+    static Store findByCode(final String code){
         return Store.values().find{it.code==code}
     }
 
-    public static List<Store> getAllSortedByName(){
+    static List<Store> getAllSortedByName(){
         return values().sort {a,b->a.name <=> b.name}
     }
 }

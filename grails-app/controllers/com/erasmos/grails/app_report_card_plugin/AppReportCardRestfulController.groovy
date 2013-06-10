@@ -1,19 +1,21 @@
 package com.erasmos.grails.app_report_card_plugin
 
 import grails.converters.JSON
+
+import java.text.DecimalFormat
+
+import javax.servlet.ServletContext
+
 import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 import org.codehaus.groovy.runtime.typehandling.GroovyCastException
 import org.springframework.http.HttpStatus
 
-import javax.servlet.ServletContext
-import java.text.DecimalFormat
-
 class AppReportCardRestfulController {
 
-    static DecimalFormat DefaultDecimalFormat   = new DecimalFormat('0.00')
-    static int DefaultMaxResults                = 200
-    static String StoreIconContentType          = 'image/png'
-    static String RestfulUrlBase                = 'appReportCardRestful' // TODO: Could probably be figured out with LinkGenerator
+    static final DecimalFormat DefaultDecimalFormat   = new DecimalFormat('0.00')
+    static final int DefaultMaxResults                = 200
+    static final String StoreIconContentType          = 'image/png'
+    static final String RestfulUrlBase                = 'appReportCardRestful' // TODO: Could probably be figured out with LinkGenerator
 
     AppReportCardService appReportCardService
     LinkGenerator grailsLinkGenerator
@@ -41,10 +43,7 @@ class AppReportCardRestfulController {
         }
 
         renderAsJSON(storeApp)
-
     }
-
-
 
     /**
      * TODO: Would be nice to pass in a max.
@@ -62,7 +61,6 @@ class AppReportCardRestfulController {
         def apps = appReportCardService.findAppsByName(requestedStore,params.appName,DefaultMaxResults)
 
         renderAsJSON(apps)
-
     }
 
     /**
@@ -99,11 +97,7 @@ class AppReportCardRestfulController {
         storeAppReport = storeAppReport!= null ? storeAppReport : [:]
 
         renderAsJSON(storeAppReport)
-
     }
-
-
-
 
     /**
      *
@@ -127,20 +121,15 @@ class AppReportCardRestfulController {
 
         response.contentType = StoreIconContentType
         response.outputStream << iconAsBytes
-
     }
 
-
-
-    public void registerJSONMarshallers(){
-
+    private void registerJSONMarshallers(){
 
         int marshallerPriority = 0
 
         [Store,StoreApp,StoreAppReport,AppReport].each {  Class _class ->
             JSON.registerObjectMarshaller(_class,marshallerPriority) {return asMapForJSON(it)}
         }
-
     }
 
     private AppId figureRequestedAppId(){
@@ -153,7 +142,6 @@ class AppReportCardRestfulController {
 
         return new AppId(rawAppId)
     }
-
 
     private byte[] getResourceContents(final String resourcePath){
         assert resourcePath != null
@@ -200,8 +188,6 @@ class AppReportCardRestfulController {
     private void renderNotFoundResponse(final String errorMessage){
         render(text: errorMessage, status: HttpStatus.NOT_FOUND.value())
     }
-
-
 
     private Map asMapForJSON(final Store store){
 
@@ -258,11 +244,8 @@ class AppReportCardRestfulController {
                 links: [
                         appReportUrl:generateLinkToAppReport(storeAppReport.appId)
                 ]
-
         ]
     }
-
-
 
     /**
      *
@@ -346,7 +329,6 @@ class AppReportCardRestfulController {
         return DefaultDecimalFormat.format(original.doubleValue()) as Double
     }
 
-
     /**
      * This is probably a kludge; I added it as some of the integration
      * tests were failing with JSON related errors, but only when
@@ -373,8 +355,6 @@ class AppReportCardRestfulController {
             else{
                 render(asMapForJSON(somethingThatCanBeRenderedAsJSON) as JSON)
             }
-
         }
     }
-
 }
